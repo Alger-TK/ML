@@ -2,9 +2,12 @@
 
 import numpy as np
 import pandas as pd
+import json
+import os
+from data import load_tran_data
 
-def load_tran_data(csv_name, tran_path = 'D:\code\data'):
-    csv_path = os.path.join(tran_path, csv_name)
-    return pd.read_csv(csv_path)
+df = load_tran_data('unpy_devcod.csv')
+cust_no = list(set(df.custno))
+
 
 
