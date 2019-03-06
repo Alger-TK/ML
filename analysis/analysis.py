@@ -11,11 +11,17 @@ def load_tran_data(csv_name, tran_path = 'D:\code\data'):
     return pd.read_csv(csv_path, dtype = str)
 df = load_tran_data('unpy_devcod.csv')
 df_new = df[['custno', 'unpydt', 'tranti', 'acctno']]
-def gain_info(df):
-    cust_no = list(set(df.custno))
-    cust_len = len(cust_no)
-    for it in range(cust_len):
-         
+# def gain_info(df):
+#     cust_no = list(set(df.custno))
+#     cust_len = len(cust_no)
+
+cust_no = list(set(df.custno))
+cust_len = len(cust_no)
+for it in range(cust_len):
+    df_per = df[df.custno == cust_no[it]]
+    if len(df_per) > 200:
+        break
+df_per.to_csv('D:\code\data\df_per.csv')
 
 
 
