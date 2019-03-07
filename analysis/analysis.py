@@ -6,7 +6,7 @@ import json
 import os
 from data import load_tran_data
 
-df = load_tran_data('df_new.csv')
+#df = load_tran_data('unpy_devcod.csv')
 
 # obtain transaction data for a single customer
 def get_per_cust(df):
@@ -19,7 +19,7 @@ def get_per_cust(df):
             break
     return df_per
 
-print(df.info())
+df = pd.read_csv('D:/code/data/unpy_devcod.csv')
 
 
 

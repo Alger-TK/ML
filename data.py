@@ -3,9 +3,9 @@ import os
 import numpy as np
 import pandas as pd
 
-def load_tran_data(csv_name, tran_path = 'D:\code\data'):
+def load_tran_data(csv_name = 'unpy_devcod.csv', tran_path = 'D:\code\data'):
     csv_path = os.path.join(tran_path, csv_name)
-    return pd.read_csv(csv_path, dtype = str)
+    return pd.read_csv(csv_path)
 
 # compute distance
 def haversine(lat1, lon1, lat2, lon2):
