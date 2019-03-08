@@ -13,13 +13,17 @@ def get_per_cust(df):
     cust_no = list(set(df.custno))
     cust_len = len(cust_no)
     for it in range(cust_len):
-        df_per = df[df.custno == cust_no[it]]
+        df_per = df[df.custno == cust_no[it]].copy()
         if len(df_per) > 200:
             print(cust_no[it])
             break
     return df_per
 
-df = pd.read_csv('D:/code/data/unpy_devcod.csv')
+df = load_tran_data()
+
+df_per = get_per_cust(df)
+df_per.to_csv('D:\code\data\df_per.csv')
+
 
 
 
