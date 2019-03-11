@@ -8,31 +8,26 @@ from data import load_tran_data
 df_per = load_tran_data(csv_name = 'df_per.csv')
 df_per = df_per[['custno', 'agency_code', 'sender_id', 'unpydt', 'tranti', 'trancd', 'acctno', 'tranmn', 'mcccod',
                  'mrchcd', 'mrchad', 'status', 'area_id', 'lat', 'lng', 'devcod']]
-df_per_len = len(df_per)
-df_dic = {col: df_per[col].tolist() for col in df_per.columns}
 
-def process(df_dic, df_per_len):
-    ls = [0 for i in range(df_per_len)]
-    dev = df_dic['devcod']
+
+def count_card(df_per = df_per):
     """
-    df_per_len:lenggth of transaction information of single customer
-    df_dic: change dataframe to dict type 
-    
+        df_per_len:length of transaction information of single customer
+        df_dic: change dataframe to dict type
+        card: card list of customer
+        count_card: number of card owned by customer
     """
-
-    return ls
-
-def count_card(df_dic, df_per_len):
+    df_per_len = len(df_per)
+    df_dic = {col: df_per[col].tolist() for col in df_per.columns}
     card = df_dic['acctno']
     count_card = len(list(set(card)))
-    return count_card
+    ls = [count_card for i in range(df_per_len)]
+    df_per.insert(7, 'count_card', ls)
+    return df_per
 
-c = count_card(df_dic, df_per_len)
-card_num = [c for i in range(df_per_len)]
-df_dic['card_num'] = card_num
-df_per = DataFrame(df_dic)
-print(df_per.info())
-print(df_per)
+count_card()
+df_per.to_csv('D:/code/data/df_new.csv')
+
 
 
 
