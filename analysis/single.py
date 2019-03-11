@@ -27,9 +27,6 @@ def count_card(df_dic, df_per_len):
     count_card = len(list(set(card)))
     return count_card
 
-
-
-
 c = count_card(df_dic, df_per_len)
 card_num = [c for i in range(df_per_len)]
 df_dic['card_num'] = card_num
