@@ -25,24 +25,37 @@ def count_card(df_per = df_per):
     df_per.insert(7, 'count_card', ls)
     return df_per
 
+
 def detail(df_per = df_per):
     df_per_len = len(df_per)
     df_dic = {col:df_per[col].tolist() for col in df_per.columns}
-    ls = [0 for i in range(df_per_len)]
+    ls = []
+    for i in range(28):
+        ls.append([0 for i in range(df_per_len)])
     trantime = df_dic['trantime']
     trancode = df_dic['trancd']
-    devcod = df_dic['devcod']
+    devcode = df_dic['devcod']
     for in1 in range(df_per_len):
-        t1 = parse(trantime[in1])
+        count_pos_1 = 0
+        count_pos_2 = 0
         for in2 in range(df_per_len):
+            t1 = parse(trantime[in1])
             t2 = parse(trantime[in2])
-            count_pos = 0
             if t1 >= t2 and (t1 - t2).total_seconds() <= 600 \
-            and trancode[in2] == '02000000' and devcod[in1] == devcode[in2]:
-                count_pos = count_pos + 1
-                ls[in1] = count_pos
-    df_per.insert(8,'tran_5_num',ls)
+            and trancode[in2] == '02000000' :
+                if devcode[in1] == devcode[in2]:
+                    count_pos_1 = count_pos_1 + 1
+                    ls[0][in1] = count_pos_1
+                else:
+                    count_pos_2 = count_pos_2+1
+                    ls[1][in1] = count_pos_2
+    df_per.insert(8,'tran_5_pos', ls[0])
+    df_per.insert(9,'tran_5_pos_area', ls[1])
     return df_per
+
+detail(df_per)
+df_per.to_csv('D:/code/data/df_per_new_2.csv')
+
 
 
 
