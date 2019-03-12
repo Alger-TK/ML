@@ -27,6 +27,11 @@ def count_card(df_per = df_per):
 
 
 def detail(df_per = df_per):
+    """
+    ls[0]: number of transaction in 5 minutes
+    ls[6]: maximum money of history transaction
+
+    """
     df_per_len = len(df_per)
     df_dic = {col:df_per[col].tolist() for col in df_per.columns}
     ls = []
