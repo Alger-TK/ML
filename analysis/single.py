@@ -46,6 +46,7 @@ def detail(df_per = df_per):
             t1 = parse(trantime[in1])
             t2 = parse(trantime[in2])
             if t1 >= t2 and card[in1] == card[in2]:
+                count[6] = max(tranmn[:(in1 + 1)])
                 if (t1 - t2).total_seconds() <= 600 and trancode[in2] == '02000000':
                     if devcode[in1] == devcode[in2]:
                         count[0] = count[0] + 1
@@ -62,12 +63,6 @@ def detail(df_per = df_per):
                     count[4] = count[4] +1
                     if lat[in1] != lat[in2] and lng[in1] != lng[in2]:
                         count[5] = count[5] + 1
-
-                count[6] = tranmn[in1]
-                if float(tranmn[in2]) > float(count[6]):
-                    count[6] = tranmn[in2]
-                    print(count[6])
-
 
         ls[0][in1] = count[0]
         ls[1][in1] = count[1]
