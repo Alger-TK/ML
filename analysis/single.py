@@ -45,8 +45,7 @@ def detail(df_per = df_per):
             t1 = parse(trantime[in1])
             t2 = parse(trantime[in2])
             if t1 >= t2 and (t1 - t2).total_seconds() <= 600 \
-            and trancode[in2] == '02000000' and \
-            card[in1] == card[in2]:
+            and trancode[in2] == '02000000' and card[in1] == card[in2]:
                 if devcode[in1] == devcode[in2]:
                     count[0] = count[0] + 1
                     ls[0][in1] = count[0]
