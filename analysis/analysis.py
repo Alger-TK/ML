@@ -19,10 +19,13 @@ def get_per_cust(df):
             break
     return df_per
 
-df = load_tran_data()
-
+df = load_tran_data(csv_name = 'unpy_devcod_new.csv')
+#df = load_tran_data()
+#df_per = get_per_cust(df)
 df_per = get_per_cust(df)
-df_per.to_csv('D:\code\data\df_per.csv')
+#df_per.to_csv('D:\code\data\df_per.csv')
+mcccod = list(set(df['mcccod']))
+print(mcccod)
 
 
 
