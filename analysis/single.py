@@ -12,10 +12,11 @@ df_per['trantime'] = df_per['unpydt'] + '/' + df_per['tranti']
 
 def count_card(df_per = df_per):
     """
-        df_per_len:length of transaction information of single customer
-        df_dic: change dataframe to dict type
-        card: card list of customer
-        count_card: number of card owned by customer
+    df_per_len:length of transaction information of single customer
+    df_dic: change DataFrame to dict type
+    card: card list of customer
+    count_card: number of card owned by customer
+
     """
     df_per_len = len(df_per)
     df_dic = {col: df_per[col].tolist() for col in df_per.columns}
@@ -28,8 +29,14 @@ def count_card(df_per = df_per):
 
 def detail(df_per = df_per):
     """
-    ls[0]: number of transaction in 5 minutes
+    ls[0]: number of transaction using same pos in 5 minutes
+    ls[1]: number of transaction using different pos in 5 minutes
+    ls[2]: number of cash withdraw in 5 minutes
+    ls[3]: cash withdraw amount in 10 minutes
+    ls[4]: number of transaction in 1h
+    ls[5]: number of place where transaction took place in 1h
     ls[6]: maximum money of history transaction
+    ls[7]:
 
     """
     df_per_len = len(df_per)
@@ -50,42 +57,56 @@ def detail(df_per = df_per):
         for in2 in range(df_per_len):
             t1 = parse(trantime[in1])
             t2 = parse(trantime[in2])
+
             if t1 >= t2 and card[in1] == card[in2]:
-                #count[6] = max(tranmn[:(in1 + 1)])
-                # if (t1 - t2).total_seconds() <= 600 and trancode[in2] == '02000000':
-                #     if devcode[in1] == devcode[in2]:
-                #         count[0] = count[0] + 1
-                #     else:
-                #         count[1] = count[1] + 1
+                if (t1 - t2).total_seconds() <= 600 and trancode[in2] == '02000000':
+                    if devcode[in1] == devcode[in2]:
+                        count[0] = count[0] + 1
+                    else:
+                        count[1] = count[1] + 1
 
-                # if (t1 - t2).total_seconds() <= 24 * 3600 and trancode[in2] == '02000102':
-                #     count[2] = count[2] + 1
+                if (t1 - t2).total_seconds() <= 24 * 3600 and trancode[in2] == '02000102':
+                    count[2] = count[2] + 1
 
+                # cash withdraw amount in 10 minutes
                 if (t1 - t2).total_seconds() <= 10*60 and trancode[in2] == '02000102':
                     count[3] = count[3] + float(tranmn[in2])
-                #
-                # if (t1 - t2).total_seconds() <= 1*3600:
-                #     count[4] = count[4] +1
-                #     if lat[in1] != lat[in2] and lng[in1] != lng[in2]:
-                #         count[5] = count[5] + 1
 
-        # ls[0][in1] = count[0]
-        # ls[1][in1] = count[1]
-        # ls[2][in1] = count[2]
+                # number of transaction in 1h
+                if (t1 - t2).total_seconds() <= 1*3600:
+                    count[4] = count[4] +1
+
+               # number of place where transaction took place
+                if (t1 - t2).total_seconds() <= 1*3600 and lat[in1] != lat[in2] and lng[in1] != lng[in2]:
+                        count[5] = count[5] + 1
+
+
+
+        ls[0][in1] = count[0]
+        ls[1][in1] = count[1]
+        ls[2][in1] = count[2]
         ls[3][in1] = count[3]
-    #     ls[4][in1] = count[4]
-    #     ls[5][in1] = count[5]
-    #     ls[6][in1] = count[6]
-    #
-    # df_per.insert(8, 'tran_5_pos', ls[0])
-    # df_per.insert(9, 'tran_5_pos_area', ls[1])
-    # df_per.insert(10, 'tran_dev_area', ls[2])
-    df_per.insert(11, 'sum_10_cash', ls[3])
-    # df_per.insert(12, 'tran_hour_sum', ls[4])
-    # df_per.insert(13, 'tran_hour_area', ls[5])
-    # df_per.insert(14, 'tran_max', ls[6])
+        ls[4][in1] = count[4]
+        ls[5][in1] = count[5]
+        # ls[6][in1] = count[6]
 
+    df_per.insert(8, 'tran_5_pos', ls[0])
+    df_per.insert(9, 'tran_5_pos_area', ls[1])
+    df_per.insert(10, 'tran_dev_area', ls[2])
+    df_per.insert(11, 'sum_10_cash', ls[3])
+    df_per.insert(12, 'tran_hour_sum', ls[4])
+    df_per.insert(13, 'tran_hour_area', ls[5])
+    df_per.insert(14, 'tran_max', ls[6])
     return df_per
+
+def detail_1(df_per = df_per):
+    df_per_len = len(df_per)
+    df_dic = {col: df_per[col].tolist() for col in df_per.columns}
+    card = df_dic['acctno']
+    count_card = len(list(set(card)))
+    ls = [count_card for i in range(df_per_len)]
+    return df_per
+
 
 detail(df_per)
 print(df_per[['acctno']])
