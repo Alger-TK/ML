@@ -7,9 +7,10 @@ from along import detail_1, detail_2, detail_3
 df = load_tran_data(csv_name = 'df_new.csv')
 custno = list(set(df.custno))
 
-df_new = load_tran_data(csv_name = 'df_new_model.csv')
+print(df.info())
 
-print(len(custno))
+# df_new = load_tran_data(csv_name = 'df_new_model.csv')
+
 # custno1 = custno[:1000]
 # for cust in custno1:
 #     df_per = df[df.custno == cust]
