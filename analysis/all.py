@@ -10,7 +10,7 @@ custno = list(set(df.custno))
 
 df_new = load_tran_data(csv_name = 'df_new_model.csv')
 
-custno1 = custno[:1000]
+custno1 = custno[:10000]
 for cust in custno1:
     df_per = df[df.custno == cust]
     df_per = detail_1(df_per)
