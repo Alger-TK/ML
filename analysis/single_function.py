@@ -10,19 +10,13 @@ mcc_lab = df_dic['subtype_label']
 lat = df_dic['lat']
 lng = df_dic['lng']
 ls = []
+
 def detail_1(df = df, df_dic = df_dic, df_per_len = df_per_len,
              devcod = devcod, card = card, tranmn = tranmn,
              mcc_lab = mcc_lab, lat = lat, lng = lng, ls = ls):
     for i in range(8):
         ls.append([0 for i in range(df_per_len)])
-    trantime = df_dic['trantime']
-    trancode = df_dic['trancd']
-    devcode = df_dic['devcod']
-    card = df_dic['acctno']
-    tranmn = df_dic['tranmn']
-    lat = df_dic['lat']
-    lng = df_dic['lng']
-
+    
     for in1 in range(df_per_len):
         count = [0 for i in range(8)]
         for in2 in range(df_per_len):
