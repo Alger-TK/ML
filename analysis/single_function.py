@@ -1,4 +1,6 @@
 from data import load_tran_data
+
+df_per = load_tran_data(csv_name = 'D:/code/data/df_per.csv')
 df_dic = {col: df_per[col].tolist() for col in df_per.columns}
 df_per_len = len(df_per)
 devcod = df_dic['devcod']
@@ -8,8 +10,9 @@ mcc_lab = df_dic['subtype_label']
 lat = df_dic['lat']
 lng = df_dic['lng']
 ls = []
-def detail_1(df_per, df_per_len):
-    ls = []
+def detail_1(df = df, df_dic = df_dic, df_per_len = df_per_len,
+             devcod = devcod, card = card, tranmn = tranmn,
+             mcc_lab = mcc_lab, lat = lat, lng = lng, ls = ls):
     for i in range(8):
         ls.append([0 for i in range(df_per_len)])
     trantime = df_dic['trantime']
